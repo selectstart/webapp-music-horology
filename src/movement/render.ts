@@ -429,8 +429,10 @@ export class MovementRenderer {
     rot(this.fourthG, fourth, FOURTH_C);
     const third = -fourth / TRAIN.FOURTH_TO_THIRD;
     rot(this.thirdG, third, THIRD_C);
-    const center = -third / TRAIN.THIRD_TO_CENTER;
-    rot(this.centerG, center, CENTER_C);
+    // Centre wheel driven by the barrel (120:22), not backwards from the
+    // escapement — matches the physical train direction and makes it visibly
+    // live while the barrel spins.
+    rot(this.centerG, -this.barrelDeg * CENTER_PINION / BARREL_R, CENTER_C);
 
     // Barrel: independent, bass-driven (see BARREL in mappings.ts).
     this.barrelDeg += (BARREL.BASE_DPS + BARREL.BASS_DPS * f.bass01) * dt;
