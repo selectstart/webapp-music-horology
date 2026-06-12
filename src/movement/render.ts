@@ -447,8 +447,8 @@ export class MovementRenderer {
     // Chronograph clutch rides the fourth wheel's driving ring.
     rot(this.couplingG, -fourth * TRAIN.FOURTH_TO_COUPLING, COUPLING_C);
 
-    // Moon drive turns only while the moonphase is engaged.
-    rot(this.moonDriveG, -f.moonDeg * TRAIN.MOON_TO_DRIVE, MOONDRIVE_C);
+    // Moon drive: always spinning off the fourth wheel (decorative but live).
+    rot(this.moonDriveG, -fourth * TRAIN.MOON_TO_DRIVE, MOONDRIVE_C);
 
     // Centre seconds: strictly geared off the escape pinion (78:14) but
     // governed by the tri-synchro glide — a viscous/magnetic coupling
