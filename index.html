@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#060608" />
+    <title>COMPLICATIONS</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="stage"></div>
+      <div id="wordmark">Complications</div>
+      <a id="about-link" href="/features.html">About</a>
+      <div id="mode-toggle">
+        <button id="mode-file" class="active" type="button">File</button>
+        <span class="sep">&middot;</span>
+        <button id="mode-mic" type="button">Mic</button>
+      </div>
+      <div id="prompt">
+        <div id="prompt-main">Drop a song</div>
+        <div id="prompt-sub">or click &middot; mp3 / wav / m4a</div>
+      </div>
+      <div id="spec"></div>
+      <button id="rec-btn" type="button" hidden>rec &#9679;</button>
+      <input id="file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac" hidden />
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

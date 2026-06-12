@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complications — Features</title>
+    <style>
+      :root {
+        --bg: #060608;
+        --bg-2: #0c0d12;
+        --bg-3: #111318;
+        --text-dim: #6f7279;
+        --text: #a8abb3;
+        --text-bright: #d2d4d9;
+        --accent: #c9a06c;
+        --accent-dim: #7a5c38;
+        --border: rgba(255, 255, 255, 0.06);
+        --gold-light: #e9c08e;
+        --gold-dark: #a4724b;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Helvetica Neue', 'Inter', -apple-system, 'Segoe UI', Arial, sans-serif;
+        min-height: 100%;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover { color: var(--gold-light); }
+
+      /* ── Nav ────────────────────────────────────────────────────────── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 40px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(6, 6, 8, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .nav-wordmark {
+        font-size: 10px;
+        letter-spacing: 0.55em;
+        text-indent: 0.55em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      .nav-back {
+        font-size: 9px;
+        letter-spacing: 0.35em;
+        text-indent: 0.35em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+
+      .nav-back:hover { color: var(--accent); }
+
+      /* ── Hero ───────────────────────────────────────────────────────── */
+      .hero {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 80px 40px 64px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-eyebrow {
+        font-size: 9px;
+        letter-spacing: 0.55em;
+        text-indent: 0.55em;
+        text-transform: uppercase;
+        color: var(--accent-dim);
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 5vw, 56px);
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        line-height: 1.15;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 em {
+        font-style: normal;
+        background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-desc {
+        font-size: 14px;
+        line-height: 1.85;
+        color: var(--text);
+        max-width: 620px;
+        letter-spacing: 0.02em;
+      }
+
+      /* ── Content ────────────────────────────────────────────────────── */
+      .content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 40px 100px;
+      }
+
+      /* ── Section ────────────────────────────────────────────────────── */
+      .section {
+        padding: 64px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section:last-child { border-bottom: none; }
+
+      .section-label {
+        font-size: 9px;
+        letter-spacing: 0.55em;
+        text-indent: 0.55em;
+        text-transform: uppercase;
+        color: var(--accent-dim);
+        margin-bottom: 32px;
+      }
+
+      .section h2 {
+        font-size: 22px;
+        font-weight: 300;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .section-intro {
+        font-size: 13px;
+        line-height: 1.9;
+        color: var(--text-dim);
+        max-width: 640px;
+        margin-bottom: 40px;
+        letter-spacing: 0.02em;
+      }
+
+      /* ── Feature grid ───────────────────────────────────────────────── */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .feature-card {
+        background: var(--bg-2);
+        padding: 28px 24px;
+        transition: background 0.25s;
+      }
+
+      .feature-card:hover { background: var(--bg-3); }
+
+      .feature-card-icon {
+        font-size: 18px;
+        margin-bottom: 12px;
+        opacity: 0.7;
+      }
+
+      .feature-card-title {
+        font-size: 10px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .feature-card-body {
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--text-dim);
+        letter-spacing: 0.01em;
+      }
+
+      /* ── Spec table ─────────────────────────────────────────────────── */
+      .spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+
+      .spec-table thead tr {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .spec-table th {
+        text-align: left;
+        font-weight: 400;
+        font-size: 9px;
+        letter-spacing: 0.45em;
+        text-indent: 0.45em;
+        text-transform: uppercase;
+        color: var(--accent-dim);
+        padding: 0 16px 16px 0;
+      }
+
+      .spec-table th:last-child { padding-right: 0; }
+
+      .spec-table tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background 0.2s;
+      }
+
+      .spec-table tbody tr:hover { background: var(--bg-3); }
+
+      .spec-table tbody tr:last-child { border-bottom: none; }
+
+      .spec-table td {
+        padding: 14px 16px 14px 0;
+        vertical-align: top;
+        color: var(--text-dim);
+        letter-spacing: 0.015em;
+        line-height: 1.6;
+      }
+
+      .spec-table td:first-child {
+        color: var(--text);
+        white-space: nowrap;
+        width: 220px;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+      }
+
+      .spec-table td:last-child { padding-right: 0; }
+
+      .tag {
+        display: inline-block;
+        font-size: 8px;
+        letter-spacing: 0.3em;
+        text-indent: 0.3em;
+        text-transform: uppercase;
+        padding: 2px 7px;
+        border-radius: 2px;
+        border: 1px solid var(--accent-dim);
+        color: var(--accent-dim);
+        margin-left: 8px;
+        vertical-align: middle;
+      }
+
+      /* ── Gear ratio visual ──────────────────────────────────────────── */
+      .train-chain {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .train-node {
+        padding: 20px 24px;
+        border-right: 1px solid var(--border);
+        flex: 1;
+        min-width: 130px;
+      }
+
+      .train-node:last-child { border-right: none; }
+
+      .train-node-label {
+        font-size: 8px;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--accent-dim);
+        margin-bottom: 6px;
+      }
+
+      .train-node-name {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+
+      .train-node-detail {
+        font-size: 10px;
+        color: var(--text-dim);
+        letter-spacing: 0.02em;
+      }
+
+      .train-arrow {
+        font-size: 14px;
+        color: var(--border);
+        padding: 0 4px;
+        flex: none;
+        display: none;
+      }
+
+      /* ── Footer ─────────────────────────────────────────────────────── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 32px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 900px;
+        margin: 0 auto;
+        font-size: 9px;
+        letter-spacing: 0.35em;
+        text-indent: 0.35em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+      <span class="nav-wordmark">Complications</span>
+      <a href="/" class="nav-back">← Open Movement</a>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-eyebrow">Interactive · Horological · Real-time</div>
+      <h1>Music rendered as a<br><em>living watch movement</em></h1>
+      <p class="hero-desc">
+        Complications translates audio into the physics of a mechanical watch — tempo becomes oscillation frequency, loudness drives balance amplitude, bass charges the mainspring barrel, spectral brightness shifts metal temperature between rose gold and rhodium. Every gear, jewel, and complication responds to the music in real time.
+      </p>
+    </div>
+
+    <div class="content">
+
+      <!-- ── The Movement ─────────────────────────────────────────────── -->
+      <div class="section">
+        <div class="section-label">01 — Escapement &amp; Train</div>
+        <h2>The Movement</h2>
+        <p class="section-intro">
+          A fully simulated Swiss lever escapement with 15-tooth escape wheel, pallet fork, impulse pin, and club-tooth geometry. Every component is governed by second-order damped springs — the same physics a real watchmaker tunes by bending the balance spring.
+        </p>
+        <div class="train-chain">
+          <div class="train-node">
+            <div class="train-node-label">Driving element</div>
+            <div class="train-node-name">Mainspring Barrel</div>
+            <div class="train-node-detail">Bass energy winds the arbor. R90 wheel, 6 click pawls</div>
+          </div>
+          <div class="train-node">
+            <div class="train-node-label">Centre wheel</div>
+            <div class="train-node-name">Third Wheel</div>
+            <div class="train-node-detail">R90 / 18T pinion · 5:1 ratio</div>
+          </div>
+          <div class="train-node">
+            <div class="train-node-label">Fourth wheel</div>
+            <div class="train-node-name">Seconds Driver</div>
+            <div class="train-node-detail">R70 / 16T pinion · 4.375:1</div>
+          </div>
+          <div class="train-node">
+            <div class="train-node-label">Regulator</div>
+            <div class="train-node-name">Escape Wheel</div>
+            <div class="train-node-detail">R75 · 15 teeth · 12°/tick CCW</div>
+          </div>
+          <div class="train-node">
+            <div class="train-node-label">Controller</div>
+            <div class="train-node-name">Balance Wheel</div>
+            <div class="train-node-detail">8-turn hairspring · RMS → amplitude</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Spring Drive Seconds ─────────────────────────────────────── -->
+      <div class="section">
+        <div class="section-label">02 — Grand Seiko–style Regulator</div>
+        <h2>Tri-Synchro Glide Seconds</h2>
+        <p class="section-intro">
+          Inspired by the Grand Seiko Spring Drive's glide-spring regulator. The centre seconds wheel (R78) meshes the escape pinion (R14) at a strict 78:14 ratio — so the hand is always geared, not cosmetic, and it stops when the music stops. A viscous exponential follower with τ = 0.35 s smooths the stepped angle, producing the silky sweep that defines a Spring Drive without breaking mechanical honesty.
+        </p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon">⚙</div>
+            <div class="feature-card-title">Strict gearing</div>
+            <div class="feature-card-body">The hand is driven by the escape wheel via a 78:14 ratio. It speeds up, slows down, and stops with the tempo — never animating independently.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">◉</div>
+            <div class="feature-card-title">Glide flywheel</div>
+            <div class="feature-card-body">A small R12 flywheel on the seconds rim spins at 6.5× the centre wheel — the tri-synchro analogue spinning visibly at the pivot, flanked by two magnetic pole shoes and a copper coil winding.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">∿</div>
+            <div class="feature-card-title">Exponential follower</div>
+            <div class="feature-card-body">csDeg += (strict − csDeg) × (1 − e^(−dt / 0.35)). The hand glides between ticks while always tracking the exact gear ratio on average.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Audio Engine ─────────────────────────────────────────────── -->
+      <div class="section">
+        <div class="section-label">03 — Audio Intelligence</div>
+        <h2>Two Input Modes</h2>
+        <p class="section-intro">
+          File mode analyses the whole song before playback begins: BPM detection, offline section segmentation, and section-by-section energy classification drive the complications. Mic mode runs in real time with no lookahead — a Bark-band flux onset detector feeds a PLL-locked tempo tracker that re-estimates every 0.5 seconds.
+        </p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon">♫</div>
+            <div class="feature-card-title">File mode</div>
+            <div class="feature-card-body">Drop mp3 / wav / m4a. BPM is detected via autocorrelation with an octave-preference fix (no half-tempo locking on fast songs). The escape wheel's beat-grid servo locks ticks to the actual song beats.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">◎</div>
+            <div class="feature-card-title">Mic mode</div>
+            <div class="feature-card-body">Live tempo tracking: AGC / echo-cancel disabled, Bark-band flux with rolling mean+σ onset threshold, PLL phase lock. Locks in ≈ 3 s, re-locks to a new tempo in ≈ 4 s.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">⊗</div>
+            <div class="feature-card-title">Section detection</div>
+            <div class="feature-card-body">Own radix-2 FFT, 12 log-spaced bands, cosine-distance novelty curve, peak-picked boundaries. Segments classified by energy z-score: chorus / verse / quiet. Complications engage on the upbeat.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">∿</div>
+            <div class="feature-card-title">Rolling normalisation</div>
+            <div class="feature-card-body">RMS, bass, and spectral centroid are all normalised against their own decaying peak — not absolute levels — so quiet masters and loud masters both drive the full range of movement.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Complications ────────────────────────────────────────────── -->
+      <div class="section">
+        <div class="section-label">04 — Horological Complications</div>
+        <h2>Four Complications</h2>
+        <p class="section-intro">
+          Each complication is mechanical in behaviour: springs throw levers, discs snap into windows, hands flyback rather than fade. They engage and disengage as the song's structure changes — not on timers, but on musical events.
+        </p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon">⟳</div>
+            <div class="feature-card-title">Flyback chronograph</div>
+            <div class="feature-card-body">Chorus sections engage the column-wheel lever. A 30-minute subdial totaliser accumulates elapsed time; at disengage the lever flies back and the hand springs to zero.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">◐</div>
+            <div class="feature-card-title">Moonphase</div>
+            <div class="feature-card-body">Rises into its aperture on quiet / bridge sections. The gold moon disc self-rotates on a 90-second period and drifts by its drive wheel's gear ratio. Stars remain fixed in the aperture.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">▷</div>
+            <div class="feature-card-title">Power reserve</div>
+            <div class="feature-card-body">Bass energy charges the fan indicator in real time. At silence the reserve collapses at 10× the passive drain rate — the movement visibly losing power as the room goes quiet.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">31</div>
+            <div class="feature-card-title">Big date</div>
+            <div class="feature-card-body">Snaps forward at each detected section boundary. Twin digit discs are clipped to individual windows with gold bezels. Only the disc that changed numerically snaps — the tens digit is stable through most of a song.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Light & Materials ─────────────────────────────────────────── -->
+      <div class="section">
+        <div class="section-label">05 — Materials &amp; Lighting</div>
+        <h2>Reactive Light &amp; Material</h2>
+        <p class="section-intro">
+          Move your mouse over the movement to reposition the bench lamp. All metal surfaces — bridges, wheels, hands, jewels, the glide flywheel — respond via shared SVG gradient definitions rather than per-element filters, keeping animation at 60 fps regardless of scene complexity.
+        </p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon">◈</div>
+            <div class="feature-card-title">Pointer-following lamp</div>
+            <div class="feature-card-body">A 0.28 s inertia exponential follower tracks the cursor. Light aim, specular glints, and cast shadows all update each frame. The drop shadow falls away from the light source at every position.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">◑</div>
+            <div class="feature-card-title">Spectral material shift</div>
+            <div class="feature-card-body">Bright, treble-heavy passages shift the train toward cool rhodium (#dfe2e6 → #84888f). Bass-heavy passages warm it to rose gold (#e9c08e → #a4724b). The shift takes ≈ 2.5 s to reach a new centroid — metal, not a VU meter.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">◇</div>
+            <div class="feature-card-title">Jewel cap reflections</div>
+            <div class="feature-card-body">Each of the 30 jewels carries a domed cap gradient re-aimed toward the light source. Pallet stones, balance jewels, and cap stones each have distinct ruby-red / steel-dome profiles.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon">〇</div>
+            <div class="feature-card-title">Exhibition skeleton</div>
+            <div class="feature-card-body">The plate is skeletonised: all four gear wheels, the keyless cascade (ratchet → crown → winding → setting), coupling wheel, and moon-drive wheel are fully visible and rotating with correct direction and ratio.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Technical Specification ───────────────────────────────────── -->
+      <div class="section">
+        <div class="section-label">06 — Technical Specification</div>
+        <h2>Full Caliber Spec</h2>
+        <p class="section-intro">
+          All values shown live on the caliber plate during playback, updated as complications engage. The jewel count increments when each complication activates.
+        </p>
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Movement type</td>
+              <td>Manual-wind mechanical</td>
+              <td>Audio-driven; mainspring torque set by bass energy</td>
+            </tr>
+            <tr>
+              <td>Balance frequency</td>
+              <td>BPM × 2 / 60 Hz</td>
+              <td>Scales live with detected tempo; glide-smoothed at tempo changes</td>
+            </tr>
+            <tr>
+              <td>Vibrations per hour</td>
+              <td>BPM × 120 vph</td>
+              <td>e.g. 120 BPM → 14,400 vph; shown on caliber plate</td>
+            </tr>
+            <tr>
+              <td>Escape wheel teeth</td>
+              <td>15 <span class="tag">Swiss lever</span></td>
+              <td>Tooth pitch 24°; 12° per tick, alternating pallets</td>
+            </tr>
+            <tr>
+              <td>Centre seconds ratio</td>
+              <td>78 : 14</td>
+              <td>Strict gearing — hand stops and speeds with the train</td>
+            </tr>
+            <tr>
+              <td>Glide wheel ratio</td>
+              <td>78 : 12</td>
+              <td>6.5× the seconds wheel; tri-synchro flywheel speed</td>
+            </tr>
+            <tr>
+              <td>Glide time constant τ</td>
+              <td>0.35 s</td>
+              <td>Smooths stepped ticks into a continuous sweep</td>
+            </tr>
+            <tr>
+              <td>Balance amplitude</td>
+              <td>180° – 310°</td>
+              <td>Maps to normalised RMS; full swing at chorus peaks</td>
+            </tr>
+            <tr>
+              <td>Hairspring turns</td>
+              <td>8</td>
+              <td>Power-law coil breathing; falloff exponent 1.6</td>
+            </tr>
+            <tr>
+              <td>Jewels (base train)</td>
+              <td>23</td>
+              <td>Balance ×4, pallet ×4, escape ×2, fourth ×2, third ×2, centre ×2, barrel ×2, CS bearing ×2, glide staff ×2, impulse pin ×1</td>
+            </tr>
+            <tr>
+              <td>Complications jewels</td>
+              <td>+7 max</td>
+              <td>Chrono +4, moon +2, power reserve +2, big date +1; activates per complication</td>
+            </tr>
+            <tr>
+              <td>Total jewels</td>
+              <td>30 max</td>
+              <td>Live count on the caliber plate</td>
+            </tr>
+            <tr>
+              <td>Power reserve indicator</td>
+              <td>Fan-type</td>
+              <td>100° arc; bass-charged, passively drains at 0.03/s</td>
+            </tr>
+            <tr>
+              <td>Chronograph</td>
+              <td>30-min flyback</td>
+              <td>Column-wheel lever; spring flyback on disengage</td>
+            </tr>
+            <tr>
+              <td>Moonphase</td>
+              <td>Rising aperture</td>
+              <td>Moon disc rises on spring; 90 s self-rotation period</td>
+            </tr>
+            <tr>
+              <td>Date complication</td>
+              <td>Big date, twin windows</td>
+              <td>Snaps on section boundaries; spring-loaded disc drop</td>
+            </tr>
+            <tr>
+              <td>Keyless works</td>
+              <td>4-wheel cascade</td>
+              <td>Ratchet (R78) → crown (R48) → winding (R22) → setting (R18)</td>
+            </tr>
+            <tr>
+              <td>Render method</td>
+              <td>SVG + requestAnimationFrame</td>
+              <td>Gradient re-aim per frame; no canvas; no WebGL; ~60 fps</td>
+            </tr>
+            <tr>
+              <td>Audio stack</td>
+              <td>Web Audio API + Meyda</td>
+              <td>AnalyserNode, MediaRecorder, OfflineAudioContext, own FFT</td>
+            </tr>
+            <tr>
+              <td>Share</td>
+              <td>10 s WebM loop</td>
+              <td>SVG → Image → canvas captureStream muxed with audio track</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <footer>
+      <span>Complications — Music to Mechanism</span>
+      <a href="/" class="nav-back">← Open Movement</a>
+    </footer>
+
+  </body>
+</html>
